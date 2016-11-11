@@ -1,0 +1,32 @@
+
+
+<!DOCTYPE html>
+
+<html>
+        <body>
+            <p> Search for definition </p>
+            <button type="button" id="btn"> Search </button>
+        <title>Searching for definition  </title>
+         <script>
+         //var httpRequest;
+         document.getElementById("btn").onclick = function() {request();};
+        
+        function request(){
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = function()
+        { 
+            if (httpRequest.readyState === 4 && httpRequest.status === 200) {
+        alert(httpRequest.responseText);
+        }
+        };
+        httpRequest.open('GET', "request.php?q=definition",true);
+        httpRequest.send();
+        }
+
+        </script>
+    </body>
+    
+</html>
+
+
+
