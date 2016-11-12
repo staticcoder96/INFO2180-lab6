@@ -4,22 +4,81 @@
 
 <html>
         <body>
-            <p> Search for definition </p>
-            <button type="button" id="btn"> Search </button>
-        <title>Searching for definition  </title>
+            <h1> Web Dictionary </h1>
+            <p>Type in any word to display the definition </p>
+            <!-- Form !-->
+            <form action="request.php" method="post">
+                <input type="text" id="word"/>
+               
+                </form>
+              <button type="button" id="btn"> Search </button>
+            
+            <br>  </br>
+            
+            <div id="result"> Result </div>
+            <p id="demo"> </p>
+            
+        <title>Searching for any word  </title>
+        
+        <!--css code !-->
+        <style type="text/css">
+            h1{ 
+                background-color: purple;
+                font-size: 60px;
+                font-family: serif;
+                font-style: italic;
+                text-align: left;
+                border: 1px solid #FF1493;
+                
+            }
+            p{
+                font-size: 20px;
+                font-family:"Times New Roman";
+            }
+            body{
+                background-color: #FF7F50;
+            }
+            #result{
+                color: #FF00FF;
+                font-size: 29px;
+            }
+            #btn{
+                color: #FF0000;
+                font-size: 15px;
+            }
+            
+            
+        </style>
+        
+        <!-- JavaScript code -->
          <script>
-         //var httpRequest;
          document.getElementById("btn").onclick = function() {request();};
         
         function request(){
+            
         var httpRequest = new XMLHttpRequest();
+        var any = document.getElementById("word").value;
+        
+        if (!httpRequest){
+            alert("Not going to happen");
+            return false;
+        }
+        else if( any ===""){
+            alert("Type a word Please!!!");
+        }
+        
         httpRequest.onreadystatechange = function()
         { 
-            if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-        alert(httpRequest.responseText);
-        }
+            if (httpRequest.readyState === 4 && httpRequest.status === 200) { 
+                document.getElementById("result").innerHTML = httpRequest.responseText;
+                // document.getElementById("demo").innerHTML = any;
+                }
+                else{
+                    console.log("Error");
+                }
+                
         };
-        httpRequest.open('GET', "request.php?q=definition",true);
+         httpRequest.open('GET', "request.php?q=" +any,true);
         httpRequest.send();
         }
 
