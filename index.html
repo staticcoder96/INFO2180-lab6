@@ -18,10 +18,10 @@
             <br>  </br>
             
             <div id="result"> Result </div>
-            <!-- All Definitions -->
+            <p id ="demo"></p>
+            <p class="spaces"> </p>
             
-            
-        <title>Searching for any word  </title>
+         <title>Searching for any word  </title>
         
         <!--css code !-->
         <style type="text/css">
@@ -39,7 +39,7 @@
                 font-family:"Times New Roman";
             }
             body{
-                background-color: #FF7F50;
+                background-color: #FAF0E6;
             }
             #result{
                 color: #FF00FF;
@@ -49,12 +49,18 @@
                 color: #FF0000;
                 font-size: 15px;
             }
+            #demo{
+                color:#FF4500; 
+                font-style:italic;
+            }
             
+           
             
         </style>
         
         <!-- JavaScript code -->
          <script>
+         //To make the Search button work you need to comment out the xml code below it in the request.php file.
          document.getElementById("btn").onclick = function() {request();};
         
         function request(){
@@ -74,7 +80,7 @@
         { 
             if (httpRequest.readyState === 4 && httpRequest.status === 200) { 
                 document.getElementById("result").innerHTML = httpRequest.responseText;
-                // document.getElementById("demo").innerHTML = any;
+                
                 }
                 else{
                     console.log("Error");
@@ -85,10 +91,14 @@
         httpRequest.send();
         }
         
+        
+        //To make the Get All Definitions button to work you need to comment out the associative array in the request.php file.
         document.getElementById("newbtn").onclick = function() {getAll();};
         
-        function getAll(){ 
-             var xmlRequest = new XMLHttpRequest(); 
+        function getAll(){
+            var result;
+             var xmlRequest = new XMLHttpRequest();
+             var d;
              if (!xmlRequest){ 
                  alert("Not going to happen"); 
                  return false; 
@@ -100,29 +110,20 @@
                 var xmldoc = xmlRequest.responseXML;
                 var def = xmldoc.getElementsByTagName("definition");
                 
-                for(var d = 0; d < def.length; d++){
-                    //console.log("hello");
-                    var result = def[d].getAttribute("name") + def[d].getAttribute("author");
-                    //console.log(result);
-                    document.getElementById("result").innerHTML = result;
+                for(d = 0; d < def.length; d++) { 
+                    result += "<h3>" +"<br>" + "Name: " +def[d].getAttribute("name") +" "+ "Meaning: " +def[d].innerHTML + "<br/> "+ "Author: " +def[d].getAttribute("author") + "<br/>" + "<br/>";
                 }
-                
-            }
+                 document.getElementById("demo").innerHTML = result;
+                 }
                
         };
       
-         xmlRequest.open('Get', "request.1.php?q=&all=true",true);
-         xmlRequest.send();
-            
-         
-
-            
+        xmlRequest.open("GET","request.php?q=&all=true",true);
+        xmlRequest.send();
         }
-
         </script>
-    </body>
-    
-</html>
+        </body>
+        </html>
 
 
 
