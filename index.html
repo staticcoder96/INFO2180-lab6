@@ -11,12 +11,15 @@
                 <input type="text" id="word"/>
                
                 </form>
-              <button type="button" id="btn"> Search </button>
+              <button type="button" id="btn"> Search </button> 
+              
+              <button type="button" id="newbtn"> Get All Definitions </button> 
             
             <br>  </br>
             
             <div id="result"> Result </div>
-            <p id="demo"> </p>
+            <!-- All Definitions -->
+            
             
         <title>Searching for any word  </title>
         
@@ -42,7 +45,7 @@
                 color: #FF00FF;
                 font-size: 29px;
             }
-            #btn{
+            #btn,#newbtn{
                 color: #FF0000;
                 font-size: 15px;
             }
@@ -63,7 +66,7 @@
             alert("Not going to happen");
             return false;
         }
-        else if( any ===""){
+        else if( any ==""){
             alert("Type a word Please!!!");
         }
         
@@ -80,6 +83,40 @@
         };
          httpRequest.open('GET', "request.php?q=" +any,true);
         httpRequest.send();
+        }
+        
+        document.getElementById("newbtn").onclick = function() {getAll();};
+        
+        function getAll(){ 
+             var xmlRequest = new XMLHttpRequest(); 
+             if (!xmlRequest){ 
+                 alert("Not going to happen"); 
+                 return false; 
+                 } 
+                 
+        xmlRequest.onreadystatechange = function()
+        { 
+            if (xmlRequest.readyState === 4 && xmlRequest.status === 200) { 
+                var xmldoc = xmlRequest.responseXML;
+                var def = xmldoc.getElementsByTagName("definition");
+                
+                for(var d = 0; d < def.length; d++){
+                    //console.log("hello");
+                    var result = def[d].getAttribute("name") + def[d].getAttribute("author");
+                    //console.log(result);
+                    document.getElementById("result").innerHTML = result;
+                }
+                
+            }
+               
+        };
+      
+         xmlRequest.open('Get', "request.1.php?q=&all=true",true);
+         xmlRequest.send();
+            
+         
+
+            
         }
 
         </script>
